@@ -179,7 +179,7 @@ public class RecuperacionUser extends javax.swing.JFrame {
             else
             {
                 Email gm=new  Email();
-                gm.enviarcorreo("galileoga63@gmail.com", "anomalocaris", txtemail.getText(), pass, "Recuperación de contraseña");
+                gm.enviarcorreo("remitente@gmail.com", "password", txtemail.getText(), pass, "Recuperación de contraseña");
                 JOptionPane.showMessageDialog(this, "Éxito, se ha enviado un correo con tu contraseña."); 
             }
     }//GEN-LAST:event_btnenviarActionPerformed

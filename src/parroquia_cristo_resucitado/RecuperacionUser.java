@@ -48,6 +48,7 @@ public class RecuperacionUser extends javax.swing.JFrame {
         btnmin = new javax.swing.JLabel();
         btnexit = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(720, 403));
@@ -65,7 +66,7 @@ public class RecuperacionUser extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Candara", 3, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(240, 23, 18));
-        jLabel2.setText("Ingrese su Corre Electrónico:");
+        jLabel2.setText("Ingrese su Correo Electrónico:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 199, -1, -1));
 
         txtemail.setBorder(null);
@@ -114,6 +115,14 @@ public class RecuperacionUser extends javax.swing.JFrame {
 
         jSeparator2.setBackground(new java.awt.Color(240, 23, 18));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 280, 20));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,11 +187,32 @@ public class RecuperacionUser extends javax.swing.JFrame {
             }
             else
             {
-                Email gm=new  Email();
-                gm.enviarcorreo("remitente@gmail.com", "password", txtemail.getText(), pass, "Recuperación de contraseña");
-                JOptionPane.showMessageDialog(this, "Éxito, se ha enviado un correo con tu contraseña."); 
+                try
+                {
+                    Email gm=new  Email();
+                    gm.enviarcorreo("arrocristoresucitado@gmail.com", "resucitado3", txtemail.getText(), pass, "Recuperación de contraseña");
+                    JOptionPane.showMessageDialog(this, "Éxito, se ha enviado un correo con tu contraseña."); 
+                }
+                catch(Exception ex)
+                {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
             }
     }//GEN-LAST:event_btnenviarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+                try
+                {
+                    Email gm=new  Email();
+                    gm.enviarcorreo("galileoga63@gmail.com", "anomalocaris", "galileoga63@gmail.com", "FIUWDGHK", "Recuperación de contraseña");
+                    JOptionPane.showMessageDialog(this, "Éxito, se ha enviado un correo con tu contraseña."); 
+                }
+                catch(Exception ex)
+                {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 class Email 
 {
@@ -274,6 +304,7 @@ class Email
     private javax.swing.JButton btnenviar;
     private javax.swing.JLabel btnexit;
     private javax.swing.JLabel btnmin;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

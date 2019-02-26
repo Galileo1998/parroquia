@@ -25,6 +25,7 @@ public class menu extends javax.swing.JFrame {
      */
     public menu() {
         initComponents();
+        this.setLocationRelativeTo(null);
         imagen_logo();
     }
     

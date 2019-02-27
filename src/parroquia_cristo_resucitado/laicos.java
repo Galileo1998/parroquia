@@ -306,8 +306,121 @@ public class laicos extends javax.swing.JFrame {
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        if(existe_personas()==1)
+        {
+         try 
+        {
+            basededatos bd=new basededatos();
+            Statement stmt=null;
+            ResultSet rs=null;
+            bd.conexion();
+           
+            
+            int valor=0;
+            CallableStatement call=bd.con.prepareCall("{CALL existir_laico(?)}");
+            call.setString(1, jTextField1.getText());
+            call.execute();
+            rs = call.getResultSet();
+            while(rs.next())
+            {
+               valor=rs.getInt(1);
+            }
 
+                if (valor==1)
+                {
+                     JOptionPane.showMessageDialog(null, "Esta persona ya tiene asignado un rol en la parroquia, por favor intenta actualizar su información.");
+                }
+                else
+                {
+                    ingresar_laico();
+                }
+ 
+        } 
+        catch (SQLException ex) 
+        {
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Esta persona aún no ha sido registrada, por favor, resgistra está persona e intenta nuevamente.");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    public int existe_personas()
+    {
+                    
+        int valor=0;
+        try 
+        {
+            basededatos bd=new basededatos();
+            Statement stmt=null;
+            ResultSet rs=null;
+            bd.conexion();
+           
+
+            CallableStatement call=bd.con.prepareCall("{call EXISTIR_PERSONA(?)}");
+            call.setString(1, jTextField1.getText());
+            call.execute();
+            rs = call.getResultSet();
+            while(rs.next())
+            {
+               valor=rs.getInt(1);
+            }
+ 
+        } 
+        catch (SQLException ex) 
+        {
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
+        return valor;
+    }
+    
+    public void ingresar_laico()
+    {
+        try
+        {
+            basededatos bd=new basededatos();
+            Statement stmt=null;
+            ResultSet rs=null;
+            bd.conexion();
+            CallableStatement call=bd.con.prepareCall("{CALL registro_nuevo_laico(?,?,?,?,?)}");
+            call.setString(1, jTextField1.getText());
+            call.setInt(2, nuevo_id_rol());
+            call.setString(3, jTextArea1.getText());
+            call.setInt(4, jComboBox1.getSelectedIndex()+1);
+            call.setInt(5, jComboBox2.getSelectedIndex()+1);
+            call.execute();
+        }
+        catch (Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
+    public int nuevo_id_rol()
+    {
+        int valor=0;
+                try
+                {
+                    basededatos bd= new basededatos();
+                    bd.conexion();
+                    Statement st= bd.con.createStatement();
+                    rs=st.executeQuery("select count(*) from rol_parroquial");
+
+                    while(rs.next())
+                    {
+                        valor=rs.getInt(1);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    JOptionPane.showMessageDialog(null,ex.getMessage()); 
+                }
+        valor=valor+1;
+        return valor;
+    }
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed

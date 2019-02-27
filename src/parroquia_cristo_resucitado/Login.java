@@ -295,9 +295,11 @@ public class Login extends javax.swing.JFrame {
 
                 if (valor==1)
                 {
+                    this.setVisible(false);
                     menu menus= new menu();
                     menus.setVisible(true);
                     menus.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
                 }
                 else
                 {

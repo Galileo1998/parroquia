@@ -640,6 +640,7 @@ public class personas extends javax.swing.JFrame {
                 call.setString(12, jTextField6.getText());
                 call.setString(13, imagen_BD);
                 call.execute();
+                JOptionPane.showMessageDialog(this, "Registro insertado con éxito");
             }
             catch(Exception ex)
             {

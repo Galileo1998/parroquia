@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.ImageIcon;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author Fabricio
@@ -187,6 +188,11 @@ public class personas extends javax.swing.JFrame {
         jLabel1.setText("N° de Identidad:");
 
         jTextField1.setName(""); // NOI18N
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
 
         jButton1.setText("Buscar");
         jButton1.setToolTipText("");
@@ -199,6 +205,11 @@ public class personas extends javax.swing.JFrame {
         jLabel2.setText("Nombres:");
 
         jTextField2.setName(""); // NOI18N
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField2KeyTyped(evt);
+            }
+        });
 
         jTextField3.setName(""); // NOI18N
 
@@ -225,8 +236,13 @@ public class personas extends javax.swing.JFrame {
         jCheckBox2.setText("Estado activo en la parroquia");
         jCheckBox2.setToolTipText("");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sexo Masculino", "Sexo Femenino", "No definido" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " Masculino", " Femenino", "Selecione una opcion", " " }));
         jComboBox1.setSelectedIndex(2);
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Sexo:");
         jLabel7.setToolTipText("");
@@ -556,96 +572,115 @@ public class personas extends javax.swing.JFrame {
     String imagen_BD="";
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-    int result = fileChooser.showOpenDialog(this);
-    if (result == JFileChooser.APPROVE_OPTION) 
-    {
-        File selectedFile = fileChooser.getSelectedFile();
-        System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-    }
-    String path="";
-        try
-        {   
-            path = fileChooser.getSelectedFile().getAbsolutePath();  
-            //URL url = this.getClass().getResource(path);  
-            ImageIcon icon = new ImageIcon(path);  
-            jButton2.setIcon(icon);
-            ImageIcon icons= (ImageIcon) jButton2.getIcon();
-            int ancho= jButton2.getWidth();
-            int alto= jButton2.getHeight();
-            ImageIcon iconoEscalado= new ImageIcon(icons.getImage().getScaledInstance(ancho, alto, java.awt.Image.SCALE_DEFAULT));
-            jButton2.setIcon(iconoEscalado);
-        }
-        catch(Exception ex)
-        {
-            System.out.print("No se encontró el archivo: "+ex.getMessage());
-        }
-   
+            if(jTextField1.getText()!=null)
+            {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                FileNameExtensionFilter filtro= new FileNameExtensionFilter("*.JPG", "jpg");
+                fileChooser.setFileFilter(filtro);
 
-        
-        imagen_BD= "src/parroquia_cristo_resucitado/img/"+jTextField1.getText()+".jpg";
-        try {
-            copyFile_Java7(path, imagen_BD);
-        } catch (IOException ex) {
-            Logger.getLogger(personas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                int result = fileChooser.showOpenDialog(this);
+
+                if (result == JFileChooser.APPROVE_OPTION) 
+                {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+                }
+                String path="";
+                    try
+                    {   
+                        path = fileChooser.getSelectedFile().getAbsolutePath();  
+                        //URL url = this.getClass().getResource(path);  
+                        ImageIcon icon = new ImageIcon(path);  
+                        jButton2.setIcon(icon);
+                        ImageIcon icons= (ImageIcon) jButton2.getIcon();
+                        int ancho= jButton2.getWidth();
+                        int alto= jButton2.getHeight();
+                        ImageIcon iconoEscalado= new ImageIcon(icons.getImage().getScaledInstance(ancho, alto, java.awt.Image.SCALE_DEFAULT));
+                        jButton2.setIcon(iconoEscalado);
+                    }
+                    catch(Exception ex)
+                    {
+                        System.out.print("No se encontró el archivo: "+ex.getMessage());
+                    }
+
+
+
+                    imagen_BD= "src/parroquia_cristo_resucitado/img/"+jTextField1.getText()+".jpg";
+                    try {
+                        copyFile_Java7(path, imagen_BD);
+                    } catch (IOException ex) {
+                        Logger.getLogger(personas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Aún no ha ingresado un número de identidad.");
+            }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-         int es_vital=0, es_activo=0;
-
-        if (jCheckBox1.isSelected())
+        if(jTextField1.getText().length()>0)
         {
-            es_vital=1;
+            int es_vital=0, es_activo=0;
+
+            if (jCheckBox1.isSelected())
+            {
+                es_vital=1;
+            }
+            else
+            {
+                es_vital=0;
+            }
+
+            if (jCheckBox2.isSelected())
+            {
+                es_activo=1;
+            }
+            else
+            {
+                es_activo=0;
+            }
+
+                String fecha=new SimpleDateFormat("yyyy-MM-dd").format(jCalendar1.getDate());
+                basededatos bd=new basededatos();
+                Statement stmt=null;
+                ResultSet rs=null;
+                bd.conexion();
+
+
+                try
+                {
+
+                    CallableStatement call=bd.con.prepareCall("{CALL insertar_personas(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+                    call.setString(1, jTextField1.getText());
+                    call.setString(2, jTextField2.getText());
+                    call.setString(3, jTextField3.getText());
+                    call.setString(4,  fecha);
+                    call.setInt(5, es_vital);
+                    call.setInt(6, es_activo);
+                    call.setInt(7, jComboBox2.getSelectedIndex()+1);
+                    call.setInt(8, id_lugares());
+                    call.setString(9, jTextField4.getText());
+                    call.setInt(10, jComboBox1.getSelectedIndex());
+                    call.setString(11, jTextField5.getText());
+                    call.setString(12, jTextField6.getText());
+                    call.setString(13, imagen_BD);
+                    call.execute();
+                    JOptionPane.showMessageDialog(this, "Registro insertado con éxito");
+                }
+                catch(Exception ex)
+                {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
         }
         else
         {
-            es_vital=0;
+            JOptionPane.showMessageDialog(this, "Debe especificar un número de identidad para poder continuar.");
         }
-
-        if (jCheckBox2.isSelected())
-        {
-            es_activo=1;
-        }
-        else
-        {
-            es_activo=0;
-        }
-        
-            String fecha=new SimpleDateFormat("yyyy-MM-dd").format(jCalendar1.getDate());
-            basededatos bd=new basededatos();
-            Statement stmt=null;
-            ResultSet rs=null;
-            bd.conexion();
-           
-           
-            try
-            {
-
-                CallableStatement call=bd.con.prepareCall("{CALL insertar_personas(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
-                call.setString(1, jTextField1.getText());
-                call.setString(2, jTextField2.getText());
-                call.setString(3, jTextField3.getText());
-                call.setString(4,  fecha);
-                call.setInt(5, es_vital);
-                call.setInt(6, es_activo);
-                call.setInt(7, jComboBox2.getSelectedIndex()+1);
-                call.setInt(8, id_lugares());
-                call.setString(9, jTextField4.getText());
-                call.setInt(10, jComboBox1.getSelectedIndex());
-                call.setString(11, jTextField5.getText());
-                call.setString(12, jTextField6.getText());
-                call.setString(13, imagen_BD);
-                call.execute();
-                JOptionPane.showMessageDialog(this, "Registro insertado con éxito");
-            }
-            catch(Exception ex)
-            {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            }
+       
        /* personas_BDIUDS insertar= new personas_BDIUDS();
         insertar.insert(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(),
             (Date)jCalendar1.getDate(), es_vital, es_activo, jComboBox2.getSelectedIndex()+1, id_lugares(), jTextField4.getText(),
@@ -675,9 +710,50 @@ public class personas extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        laicos lc= new laicos();
-        lc.setVisible(true);
+        if(jTextField1.getText().length()>0)
+        {
+            try
+            {
+                basededatos bd= new basededatos();
+                bd.conexion();
+                PreparedStatement st= bd.con.prepareStatement("UPDATE temporales SET Valor_temporal=? WHERE Id_Temporales=1");
+                st.setString(1, jTextField1.getText());
+                st.executeUpdate();
+                
+            }
+            catch (Exception ex)
+            {
+                JOptionPane.showMessageDialog(null,ex.getMessage()); 
+            }
+            
+           laicos lc= new laicos();
+           lc.setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Epecifique un número de identidad para continuar.");
+        }
+               
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        
+        if(c< '0' || c > '9') evt.consume();
+    }//GEN-LAST:event_jTextField1KeyTyped
+
+    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
+        // TODO add your handling code here:
+        
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField2KeyTyped
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     public int id_lugares()
     {                     

@@ -31,6 +31,29 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import jdk.internal.org.xml.sax.SAXException;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 /**
  *
  * @author Fabricio
@@ -184,6 +207,14 @@ public class personas extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("N° de Identidad:");
 
@@ -212,6 +243,11 @@ public class personas extends javax.swing.JFrame {
         });
 
         jTextField3.setName(""); // NOI18N
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField3KeyTyped(evt);
+            }
+        });
 
         jLabel3.setText("Apellidos:");
         jLabel3.setAutoscrolls(true);
@@ -225,6 +261,11 @@ public class personas extends javax.swing.JFrame {
         jLabel5.setAutoscrolls(true);
 
         jTextField5.setName(""); // NOI18N
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField5KeyTyped(evt);
+            }
+        });
 
         jLabel6.setText("Dirección:");
         jLabel6.setAutoscrolls(true);
@@ -469,13 +510,17 @@ public class personas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -739,8 +784,7 @@ public class personas extends javax.swing.JFrame {
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        
-        if(c< '0' || c > '9') evt.consume();
+        if((c< '0' || c > '9') && (c<'-' || c>'-')) evt.consume();
     }//GEN-LAST:event_jTextField1KeyTyped
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
@@ -754,6 +798,188 @@ public class personas extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "¿Desea guardar cambios?", "ATENCIÓN", dialogButton);
+        if(dialogResult == 0) 
+        {
+                try
+                {
+                    FicheroXML xml= new FicheroXML("src/parroquia_cristo_resucitado/xml/personas.xml");
+                    xml.crearFicheroXML("PERSONA");
+                    ArrayList<String> atributos = new ArrayList<>(), valoresatributos = new ArrayList<>();
+                    
+                    String vitalicio="", activus="";
+                    
+                    if(jCheckBox1.isSelected())
+                    {
+                        vitalicio="1";
+                    }
+                    else
+                    {
+                        vitalicio="0";
+                    }
+                    
+                    if(jCheckBox2.isSelected())
+                    {
+                        activus="1";
+                    }
+                    else
+                    {
+                        activus="0";
+                    }
+                    
+                    
+                    String fecha=new SimpleDateFormat("yyyy-MM-dd").format(jCalendar1.getDate());
+                    
+                    atributos.add("personas");
+                    valoresatributos.add(jTextField1.getText());        
+                    Element item=xml.crearNodoItem("Persona", atributos, valoresatributos);
+                    xml.agregarNodo(item, "ID", jTextField1.getText(), null, null);                            
+                    xml.agregarNodo(item, "NOM", jTextField2.getText(), null, null);
+                    xml.agregarNodo(item, "APE", jTextField3.getText(), null, null);                            
+                    xml.agregarNodo(item, "EMAIL", jTextField4.getText(), null, null);
+                    xml.agregarNodo(item, "PHONE", jTextField5.getText(), null, null);                            
+                    xml.agregarNodo(item, "ADDRESS", jTextField6.getText(), null, null);
+                    xml.agregarNodo(item, "SEXO", jComboBox1.getSelectedItem().toString(), null, null);                            
+                    xml.agregarNodo(item, "PARROQUIA", jComboBox2.getSelectedItem().toString(), null, null);
+                    xml.agregarNodo(item, "DEPTO", jComboBox3.getSelectedItem().toString(), null, null);                            
+                    xml.agregarNodo(item, "MUNI", jComboBox4.getSelectedItem().toString(), null, null);
+                    xml.agregarNodo(item, "VITAL", vitalicio, null, null);
+                    xml.agregarNodo(item, "ACTIVO", activus, null, null);
+                    xml.agregarNodo(item, "FECHA", jCalendar1.getDate().toString(), null, null);                            
+                    xml.agregarNodo(item, "IMAGEN", imagen_BD, null, null);
+                    xml.agregarItemARaiz(item);
+   
+                    xml.generarFicheroXML();
+                    
+                } 
+                catch (ParserConfigurationException ex) 
+                {
+                    Logger.getLogger(personas.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                catch (TransformerException ex) 
+                {
+                    Logger.getLogger(personas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+        } 
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "¿Desea recuperar la información editada anteriormente", "ATENCIÓN", dialogButton);
+        if(dialogResult == 0) 
+        {
+            
+            leerConfiguracion();
+        }     
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
+        // TODO add your handling code here:
+                
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField3KeyTyped
+
+    private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if((c< '0' || c > '9') && (c<'-' || c>'-')) evt.consume();
+    }//GEN-LAST:event_jTextField5KeyTyped
+    public void leerConfiguracion(){
+        try
+        {
+            File fXmlFile = new File("src/parroquia_cristo_resucitado/xml/personas.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+
+            doc.getDocumentElement().normalize();
+
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+            NodeList nList = doc.getElementsByTagName("Persona");
+
+
+            for (int temp = 0; temp < nList.getLength(); temp++) 
+            {
+
+            Node nNode = nList.item(temp);
+
+            System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) 
+                {
+
+                    Element eElement = (Element) nNode;
+                    this.jTextField1.setText( eElement.getElementsByTagName("ID").item(0).getTextContent());
+                    this.jTextField2.setText( eElement.getElementsByTagName("NOM").item(0).getTextContent());
+                    this.jTextField3.setText( eElement.getElementsByTagName("APE").item(0).getTextContent());
+                    this.jTextField4.setText( eElement.getElementsByTagName("EMAIL").item(0).getTextContent());
+                    this.jTextField5.setText( eElement.getElementsByTagName("PHONE").item(0).getTextContent());
+                    this.jTextField6.setText( eElement.getElementsByTagName("ADDRESS").item(0).getTextContent());
+                    this.jComboBox1.setSelectedItem(eElement.getElementsByTagName("SEXO").item(0).getTextContent());
+                    this.jComboBox2.setSelectedItem(eElement.getElementsByTagName("PARROQUIA").item(0).getTextContent());
+                    this.jComboBox3.setSelectedItem(eElement.getElementsByTagName("DEPTO").item(0).getTextContent());
+                    this.jComboBox4.setSelectedItem(eElement.getElementsByTagName("MUNI").item(0).getTextContent());
+                    int v=Integer.parseInt(eElement.getElementsByTagName("VITAL").item(0).getTextContent());
+                    int a=Integer.parseInt(eElement.getElementsByTagName("ACTIVO").item(0).getTextContent());
+                    //jCheckBox1.setText(a);
+                    //jCheckBox2.setText(v);
+                    if(v==1)
+                    {
+                        jCheckBox1.setSelected(true);
+                    }
+                    else
+                    {
+                        jCheckBox1.setSelected(false);                 
+                    }
+
+                    if(a==1)
+                    {
+                        jCheckBox2.setSelected(true);
+                    }
+                    else
+                    {
+                        jCheckBox2.setSelected(false);                 
+                    }
+                     
+
+                    String path=" ";
+                    
+                    try
+                    {
+                        path=eElement.getElementsByTagName("IMAGEN").item(0).getTextContent();
+                        ImageIcon perfil= new ImageIcon(path);
+                        jButton2.setIcon(perfil);
+                        int ancho= jButton2.getWidth();
+                        int alto= jButton2.getHeight();
+                        ImageIcon iconoEscalado= new ImageIcon(perfil.getImage().getScaledInstance(ancho, alto, java.awt.Image.SCALE_DEFAULT));
+                        jButton2.setIcon(iconoEscalado);
+                        jButton2.setText(path);
+                    }
+                    catch(Exception ex)
+                    {
+                        JOptionPane.showMessageDialog(this, path);
+                    }
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat sdf= new SimpleDateFormat();
+                    cal.setTime(sdf.parse(eElement.getElementsByTagName("FECHA").item(0).getTextContent()));
+                    jLabel9.setText(eElement.getElementsByTagName("FECHA").item(0).getTextContent());
+                    this.jCalendar1.setDate(cal.getTime());
+                }
+            }
+    } catch (Exception e) {
+    e.printStackTrace();
+    }
+  }
 
     public int id_lugares()
     {                     

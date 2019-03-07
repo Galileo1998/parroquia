@@ -7,16 +7,27 @@
 package parroquia_cristo_resucitado;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  *
@@ -105,11 +116,32 @@ public class confirmacion extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
         jLabel1.setText("Confirmación");
 
         jLabel2.setText("Libro:");
 
         jLabel3.setText("Registro:");
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
+
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField2KeyTyped(evt);
+            }
+        });
 
         jLabel4.setText("Confirmado:");
 
@@ -128,7 +160,19 @@ public class confirmacion extends javax.swing.JFrame {
 
         jLabel6.setText("Nombres del Confirmado:");
 
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField4KeyTyped(evt);
+            }
+        });
+
         jLabel7.setText("Apellidos del Confirmado:");
+
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField5KeyTyped(evt);
+            }
+        });
 
         jLabel8.setText("Padre del Confirmado");
 
@@ -149,6 +193,18 @@ public class confirmacion extends javax.swing.JFrame {
             }
         });
 
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField7KeyTyped(evt);
+            }
+        });
+
+        jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField8KeyTyped(evt);
+            }
+        });
+
         jLabel12.setText("Identidad del Madre:");
 
         jLabel13.setText("Madre del Confirmado");
@@ -164,9 +220,26 @@ public class confirmacion extends javax.swing.JFrame {
             }
         });
 
+        jTextField10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField10ActionPerformed(evt);
+            }
+        });
+        jTextField10.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField10KeyTyped(evt);
+            }
+        });
+
         jLabel14.setText("Nombres del Madre:");
 
         jLabel15.setText("Apellidos del Madre:");
+
+        jTextField11.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField11KeyTyped(evt);
+            }
+        });
 
         jLabel16.setText("Padrino del Confirmado");
 
@@ -182,6 +255,18 @@ public class confirmacion extends javax.swing.JFrame {
         jTextField12.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField12KeyTyped(evt);
+            }
+        });
+
+        jTextField13.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField13KeyTyped(evt);
+            }
+        });
+
+        jTextField14.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField14KeyTyped(evt);
             }
         });
 
@@ -202,9 +287,21 @@ public class confirmacion extends javax.swing.JFrame {
             }
         });
 
+        jTextField16.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField16KeyTyped(evt);
+            }
+        });
+
         jLabel22.setText("Nombres del Madrina:");
 
         jLabel23.setText("Fecha de Confirmación:");
+
+        jTextField17.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField17KeyTyped(evt);
+            }
+        });
 
         jLabel24.setText("Obispo");
 
@@ -223,6 +320,18 @@ public class confirmacion extends javax.swing.JFrame {
 
         jLabel26.setText("Nombres del Obispo:");
 
+        jTextField19.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField19KeyTyped(evt);
+            }
+        });
+
+        jTextField20.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField20KeyTyped(evt);
+            }
+        });
+
         jLabel27.setText("Apellidos del Obispo:");
 
         jLabel28.setText("Catequista");
@@ -240,9 +349,21 @@ public class confirmacion extends javax.swing.JFrame {
             }
         });
 
+        jTextField22.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField22KeyTyped(evt);
+            }
+        });
+
         jLabel30.setText("Nombres del Catequista:");
 
         jLabel31.setText("Apellidos del Catequista:");
+
+        jTextField23.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField23KeyTyped(evt);
+            }
+        });
 
         jLabel32.setText("Apellidos del Madrina:");
 
@@ -253,6 +374,12 @@ public class confirmacion extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel34.setText("Acta de confirmación:");
+
+        jTextField24.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField24KeyTyped(evt);
+            }
+        });
 
         jButton1.setText("Actualizar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -547,10 +674,11 @@ public class confirmacion extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel29)
-                                    .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel23))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel29)
+                                        .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel30)
@@ -569,7 +697,10 @@ public class confirmacion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -580,7 +711,8 @@ public class confirmacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
-
+        char c = evt.getKeyChar();
+        if((c< '0' || c > '9') && (c<'-' || c>'-')) evt.consume();
         
         if(evt.getKeyChar()==KeyEvent.VK_TAB)
         {
@@ -709,7 +841,8 @@ public class confirmacion extends javax.swing.JFrame {
 
     private void jTextField6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyTyped
         // TODO add your handling code here:
-                
+        char c = evt.getKeyChar();
+        if((c< '0' || c > '9') && (c<'-' || c>'-')) evt.consume();
         if(evt.getKeyChar()==KeyEvent.VK_TAB)
         {
             jTextField6.requestFocus();
@@ -783,11 +916,13 @@ public class confirmacion extends javax.swing.JFrame {
 
     private void jTextField9KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyTyped
         // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if((c< '0' || c > '9') && (c<'-' || c>'-')) evt.consume();
     }//GEN-LAST:event_jTextField9KeyTyped
 
     private void jTextField12FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField12FocusLost
         // TODO add your handling code here:
-                            try 
+            try 
             {
                 basededatos bd=new basededatos();
                 Statement stmt=null;
@@ -852,6 +987,8 @@ public class confirmacion extends javax.swing.JFrame {
 
     private void jTextField12KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField12KeyTyped
         // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if((c< '0' || c > '9') && (c<'-' || c>'-')) evt.consume();
     }//GEN-LAST:event_jTextField12KeyTyped
 
     private void jTextField15FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField15FocusLost
@@ -974,6 +1111,8 @@ public class confirmacion extends javax.swing.JFrame {
     }
     private void jTextField15KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField15KeyTyped
         // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if((c< '0' || c > '9') && (c<'-' || c>'-')) evt.consume();
     }//GEN-LAST:event_jTextField15KeyTyped
 
     private void jTextField18FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField18FocusLost
@@ -1048,6 +1187,8 @@ public class confirmacion extends javax.swing.JFrame {
 
     private void jTextField18KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField18KeyTyped
         // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if((c< '0' || c > '9') && (c<'-' || c>'-')) evt.consume();
     }//GEN-LAST:event_jTextField18KeyTyped
 
     private void jTextField21FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField21FocusLost
@@ -1115,7 +1256,8 @@ public class confirmacion extends javax.swing.JFrame {
 
     private void jTextField21KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField21KeyTyped
         // TODO add your handling code here:
-           
+        char c = evt.getKeyChar();
+        if((c< '0' || c > '9') && (c<'-' || c>'-')) evt.consume();
     }//GEN-LAST:event_jTextField21KeyTyped
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -1292,6 +1434,277 @@ public class confirmacion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,ex.getMessage());
         }                       
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "¿Desea guardar cambios?", "ATENCIÓN", dialogButton);
+        if(dialogResult == 0) 
+        {
+                try
+                {
+                    FicheroXML xml= new FicheroXML("src/parroquia_cristo_resucitado/xml/confirmacion.xml");
+                    xml.crearFicheroXML("CONFIRMADO");
+                    ArrayList<String> atributos = new ArrayList<>(), valoresatributos = new ArrayList<>();
+  
+                    
+                    atributos.add("confirmado");
+                    valoresatributos.add(jTextField1.getText());        
+                    Element item=xml.crearNodoItem("Persona", atributos, valoresatributos);
+                    
+                    
+                    xml.agregarNodo(item, "LIBRO", jTextField2.getText(), null, null);                            
+                    xml.agregarNodo(item, "REGISTRO", jTextField1.getText(), null, null);
+                    xml.agregarNodo(item, "ACTA", jTextField24.getText(), null, null); 
+                    
+                    xml.agregarNodo(item, "ID_CON", jTextField3.getText(), null, null);                            
+                    xml.agregarNodo(item, "NOM_CON", jTextField4.getText(), null, null);
+                    xml.agregarNodo(item, "APE_CON", jTextField5.getText(), null, null);    
+                    
+                    xml.agregarNodo(item, "ID_PC", jTextField6.getText(), null, null);                            
+                    xml.agregarNodo(item, "NOM_PC", jTextField7.getText(), null, null);
+                    xml.agregarNodo(item, "APE_PC", jTextField8.getText(), null, null);       
+                    
+                    
+                    xml.agregarNodo(item, "ID_MC", jTextField9.getText(), null, null);                            
+                    xml.agregarNodo(item, "NOM_MC", jTextField10.getText(), null, null);
+                    xml.agregarNodo(item, "APE_MC", jTextField11.getText(), null, null);    
+                    
+                    xml.agregarNodo(item, "ID_PRC", jTextField12.getText(), null, null);                            
+                    xml.agregarNodo(item, "NOM_PRC", jTextField13.getText(), null, null);
+                    xml.agregarNodo(item, "APE_PRC", jTextField14.getText(), null, null); 
+                    
+                    xml.agregarNodo(item, "ID_MRC", jTextField15.getText(), null, null);                            
+                    xml.agregarNodo(item, "NOM_MRC", jTextField16.getText(), null, null);
+                    xml.agregarNodo(item, "APE_MRC", jTextField17.getText(), null, null);    
+                    
+                    xml.agregarNodo(item, "ID_OB", jTextField18.getText(), null, null);                            
+                    xml.agregarNodo(item, "NOM_OB", jTextField19.getText(), null, null);
+                    xml.agregarNodo(item, "APE_OB", jTextField20.getText(), null, null); 
+                                        
+                    xml.agregarNodo(item, "ID_CA", jTextField21.getText(), null, null);                            
+                    xml.agregarNodo(item, "NOM_CA", jTextField22.getText(), null, null);
+                    xml.agregarNodo(item, "APE_CA", jTextField23.getText(), null, null); 
+                    
+                    xml.agregarNodo(item, "NOTA", jTextArea1.getText(), null, null);
+                    xml.agregarNodo(item, "FECHA", jCalendar1.getDate().toString(), null, null); 
+                    
+
+                    xml.agregarItemARaiz(item);
+   
+                    xml.generarFicheroXML();
+                    
+                }
+                catch (ParserConfigurationException ex) 
+                {
+                    Logger.getLogger(personas.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                catch (TransformerException ex) 
+                {
+                    Logger.getLogger(personas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "¿Desea recuperar la información editada anteriormente", "ATENCIÓN", dialogButton);
+        if(dialogResult == 0) 
+        {
+            
+            leerConfiguracion();
+        }     
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField4KeyTyped
+
+    private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField5KeyTyped
+
+    private void jTextField7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField7KeyTyped
+
+    private void jTextField8KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField8KeyTyped
+
+    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField10ActionPerformed
+
+    private void jTextField10KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField10KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField10KeyTyped
+
+    private void jTextField11KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField11KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField11KeyTyped
+
+    private void jTextField13KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField13KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField13KeyTyped
+
+    private void jTextField14KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField14KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField14KeyTyped
+
+    private void jTextField16KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField16KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField16KeyTyped
+
+    private void jTextField17KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField17KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField17KeyTyped
+
+    private void jTextField19KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField19KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField19KeyTyped
+
+    private void jTextField20KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField20KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField20KeyTyped
+
+    private void jTextField22KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField22KeyTyped
+        // TODO add your handling code here:
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField22KeyTyped
+
+    private void jTextField23KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField23KeyTyped
+        char val = evt.getKeyChar();
+        
+        if( (val< 'a' || val > 'z') && (val< 'A' || val > 'Z') && (val< ' ' || val > ' ') ) evt.consume();
+    }//GEN-LAST:event_jTextField23KeyTyped
+
+    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
+        char c = evt.getKeyChar();
+        if(c< '0' || c > '9') evt.consume();
+    }//GEN-LAST:event_jTextField2KeyTyped
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // TODO add your handling code here:                                 
+        char c = evt.getKeyChar();
+        if(c< '0' || c > '9') evt.consume();
+    }//GEN-LAST:event_jTextField1KeyTyped
+
+    private void jTextField24KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField24KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(c< '0' || c > '9') evt.consume();
+    }//GEN-LAST:event_jTextField24KeyTyped
+    
+    public void leerConfiguracion(){
+        try
+        {
+            File fXmlFile = new File("src/parroquia_cristo_resucitado/xml/confirmacion.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+
+            doc.getDocumentElement().normalize();
+
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+            NodeList nList = doc.getElementsByTagName("Persona");
+
+
+            for (int temp = 0; temp < nList.getLength(); temp++) 
+            {
+
+            Node nNode = nList.item(temp);
+
+            System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) 
+                {
+
+                    Element eElement = (Element) nNode;
+                    this.jTextField2.setText( eElement.getElementsByTagName("LIBRO").item(0).getTextContent());
+                    this.jTextField1.setText( eElement.getElementsByTagName("ACTA").item(0).getTextContent());
+                    this.jTextField24.setText( eElement.getElementsByTagName("REGISTRO").item(0).getTextContent());
+                    
+                    this.jTextField3.setText( eElement.getElementsByTagName("ID_CON").item(0).getTextContent());
+                    this.jTextField4.setText( eElement.getElementsByTagName("NOM_CON").item(0).getTextContent());
+                    this.jTextField5.setText( eElement.getElementsByTagName("APE_CON").item(0).getTextContent());
+                    
+                    this.jTextField6.setText( eElement.getElementsByTagName("ID_PC").item(0).getTextContent());
+                    this.jTextField7.setText( eElement.getElementsByTagName("NOM_PC").item(0).getTextContent());
+                    this.jTextField8.setText( eElement.getElementsByTagName("APE_PC").item(0).getTextContent());
+                    
+                    this.jTextField9.setText( eElement.getElementsByTagName("ID_MC").item(0).getTextContent());
+                    this.jTextField10.setText( eElement.getElementsByTagName("NOM_MC").item(0).getTextContent());
+                    this.jTextField11.setText( eElement.getElementsByTagName("APE_MC").item(0).getTextContent());
+                    
+                    this.jTextField12.setText( eElement.getElementsByTagName("ID_PRC").item(0).getTextContent());
+                    this.jTextField13.setText( eElement.getElementsByTagName("NOM_PRC").item(0).getTextContent());
+                    this.jTextField14.setText( eElement.getElementsByTagName("APE_PRC").item(0).getTextContent());
+                    
+                    this.jTextField15.setText( eElement.getElementsByTagName("ID_MRC").item(0).getTextContent());
+                    this.jTextField16.setText( eElement.getElementsByTagName("NOM_MRC").item(0).getTextContent());
+                    this.jTextField17.setText( eElement.getElementsByTagName("APE_MRC").item(0).getTextContent());
+                    
+                    this.jTextField18.setText( eElement.getElementsByTagName("ID_OB").item(0).getTextContent());
+                    this.jTextField19.setText( eElement.getElementsByTagName("NOM_OB").item(0).getTextContent());
+                    this.jTextField20.setText( eElement.getElementsByTagName("APE_OB").item(0).getTextContent());   
+                    
+                    this.jTextField21.setText( eElement.getElementsByTagName("ID_CA").item(0).getTextContent());
+                    this.jTextField22.setText( eElement.getElementsByTagName("NOM_CA").item(0).getTextContent());
+                    this.jTextField23.setText( eElement.getElementsByTagName("APE_CA").item(0).getTextContent()); 
+                    
+                    this.jTextArea1.setText( eElement.getElementsByTagName("NOTA").item(0).getTextContent());
+                    //this.jCalendar1.setText( eElement.getElementsByTagName("APE_CA").item(0).getTextContent()); 
+                   
+                }
+            }
+    } 
+    catch (Exception e) 
+    {
+        e.printStackTrace();
+    }
+  }
+    
     public void actualizar(String iden)
     {
         try 

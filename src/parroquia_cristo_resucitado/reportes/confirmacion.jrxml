@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="confirmacion" language="groovy" pageWidth="200" pageHeight="500" columnWidth="160" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="002363be-562a-4772-b1fe-d9f33429db15">
+	<property name="ireport.zoom" value="2.5937424601000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="42" splitType="Stretch">
+			<image>
+				<reportElement x="66" y="-11" width="25" height="32" uuid="3ba381e2-67bb-472f-8bb4-776e6b47b2d4"/>
+				<imageExpression><![CDATA["C:\\Users\\Fabricio\\Documents\\NetBeansProjects\\PARROQUIA_CRISTO_RESUCITADO\\src\\parroquia_cristo_resucitado\\parroquia_logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

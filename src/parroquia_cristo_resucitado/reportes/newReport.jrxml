@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b52be714-0dcd-4a38-9044-6b8ccc61ca0b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="184"/>
+	<parameter name="nombre" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="registro" class="java.lang.String"/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<parameter name="padres" class="java.lang.String"/>
+	<parameter name="padrinos" class="java.lang.String"/>
+	<parameter name="fechaactual" class="java.lang.String"/>
+	<parameter name="sacerdote" class="java.lang.String"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="141" y="14" width="264" height="20" uuid="de0be111-71a5-4020-9327-200ca01e6b9b"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[PARROQUIA CRISTO RESUCITADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="34" width="154" height="20" uuid="cb54c735-f038-4052-9dcf-cbbf8314d258"/>
+				<text><![CDATA[Constancia de Confirmación]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="123" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="526" height="22" uuid="a30eafdc-4830-40ee-a03c-d4c6fbb669e7"/>
+				<textElement textAlignment="Justified">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[El Infraescrito Cura Vicario encargado de la "Parroquia Cristo Resucitado" certifica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="22" width="526" height="22" uuid="63629536-7480-42c9-a37b-a14d64fb9c90"/>
+				<textElement textAlignment="Justified">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[que en los archivos parroquiales la persona:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="294" y="22" width="231" height="20" uuid="8b71a26f-5aae-4db5-bae8-145e08c32158"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="44" width="212" height="22" uuid="21851439-e6b6-46df-8638-f14474791154"/>
+				<textElement textAlignment="Justified">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[fue confirmado: con Registro No.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="222" y="44" width="32" height="20" uuid="274585b4-a5fe-45f2-b623-f5345ae771cb"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{registro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="255" y="44" width="39" height="22" uuid="db7ef630-9b88-480c-a028-557604651806"/>
+				<textElement textAlignment="Justified">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[el día]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="294" y="44" width="100" height="20" uuid="f8aaf312-ebfc-4b74-ab32-d80e6f0c8e23"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="64" width="72" height="22" uuid="a0ccb7db-31cb-4e84-b449-cf17d0f70135"/>
+				<textElement textAlignment="Justified">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[hijo (a) de: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="82" y="64" width="443" height="20" uuid="bcb90378-b94b-4fcf-8214-cc36cabf584b"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{padres}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="86" width="144" height="22" uuid="c1a66eaf-4096-4546-bd56-1f41742553f4"/>
+				<textElement textAlignment="Justified">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Fueron sus padrinos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="154" y="86" width="371" height="20" uuid="7e3b80e8-e26e-4f4b-bd65-8a980a757b1c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{padrinos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="142" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="526" height="22" uuid="1701bac3-3644-45b5-a7f5-6a390b04719a"/>
+				<textElement textAlignment="Justified">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Se le extiende la presente Constancia en la ciudad de Tegucigalpa M.D.C, a los]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="32" width="100" height="20" uuid="7b875636-cfe5-4de4-9956-778a85e24052"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaactual}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="154" y="113" width="219" height="1" uuid="5c49917d-670f-4920-be09-b47f88444777"/>
+			</line>
+			<textField>
+				<reportElement x="110" y="122" width="317" height="20" uuid="eea47a85-21ce-4e95-a8b8-58c411072bab"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sacerdote}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="16" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

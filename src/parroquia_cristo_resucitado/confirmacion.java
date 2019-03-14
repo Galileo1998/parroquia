@@ -8,14 +8,20 @@ package parroquia_cristo_resucitado;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -24,6 +30,16 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -115,6 +131,7 @@ public class confirmacion extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -404,6 +421,13 @@ public class confirmacion extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("Imprimir");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -446,7 +470,10 @@ public class confirmacion extends javax.swing.JFrame {
                                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButton5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel33)
                                 .addGap(190, 190, 190))
@@ -671,8 +698,12 @@ public class confirmacion extends javax.swing.JFrame {
                     .addComponent(jLabel28)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel33)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -686,11 +717,10 @@ public class confirmacion extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel31)
-                                    .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel33)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton5)
+                                .addGap(27, 27, 27))))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1634,6 +1664,50 @@ public class confirmacion extends javax.swing.JFrame {
         char c = evt.getKeyChar();
         if(c< '0' || c > '9') evt.consume();
     }//GEN-LAST:event_jTextField24KeyTyped
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        InputStream inputStream = null;
+        try 
+        {
+            inputStream = new FileInputStream ("src/parroquia_cristo_resucitado/reportes/newReport.jrxml");
+        } catch (FileNotFoundException ex)
+        {
+            
+            Logger.getLogger(confirmacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Date obj= new Date();
+        Map parameters = new HashMap();
+        parameters.put("nombre", jTextField4.getText()+" "+jTextField5.getText());
+        parameters.put("registro", jTextField1.getText());
+        parameters.put("fecha", jCalendar1.getDate().toString());
+        parameters.put("padres", jTextField7.getText()+" "+jTextField8.getText()+" y "+jTextField10.getText()+" "+jTextField11.getText());
+        parameters.put("padrinos", jTextField13.getText()+" "+jTextField14.getText()+" y "+jTextField16.getText()+" "+jTextField17.getText());
+        parameters.put("fechaactual", obj.toString());
+        parameters.put("sacerdote", "Luis Andrés Cerrato Martínez");
+        JasperDesign jasperDesign=null;
+        try 
+        {
+            jasperDesign = JRXmlLoader.load(inputStream);
+            JasperReport jasperReport=null;
+            jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            //jasperReport=(JasperReport) JRLoader.loadObject(inputStream);
+            JasperPrint jasperPrint=null;
+            basededatos bd= new basededatos();
+            jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, bd.con);
+            JasperViewer jv=new JasperViewer(jasperPrint, false);
+            jv.setVisible(true);
+            jv.setName("Parroquia Cristo Resucitado");
+            jv.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            //JasperViewer.viewReport(jasperPrint);
+            //JasperExportManager.exportReportToPdfFile(jasperPrint, "src/parroquia_cristo_resucitado/reportes/con.pdf");
+            //JOptionPane.showMessageDialog(this, "BIEN");
+        } catch (JRException ex) {
+            Logger.getLogger(confirmacion.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+       
+    }//GEN-LAST:event_jButton5ActionPerformed
     
     public void leerConfiguracion(){
         try
@@ -1762,6 +1836,7 @@ public class confirmacion extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
